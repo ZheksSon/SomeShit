@@ -1,0 +1,7 @@
+---
+- name: Set Hostname
+  become: true
+  ansible.builtin.hostname:
+    name: "{{ansible_facts['os_family'] }}"
+
+# OSfamily orrrrr Какой факт нужен в роли назваиня?

@@ -1,0 +1,28 @@
+---
+- name: Настройка DNS серверов на Debian
+  become: true
+  ansible.builtin.template:
+    src: netplan.j2
+    dest: /etc/netplan/00-installer-config.yaml
+  when: "ansible_facts['os_family'] == 'Debian'"
+
+- name: Принять Netplan
+  become: true
+  ansible.builtin.shell:
+    cmd: netplan apply
+  when: "ansible_facts['os_family'] == 'Debian'"
+
+- name: Настройка DNS серверов на Oracle
+  become: true
+  ansible.builtin.template:
+    src: network.j2
+    dest: /etc/sysconfig/network-scripts/ifcfg-enp0s3
+  when: "ansible_facts['os_family'] == 'RedHat'"
+
+- name: Принять настройки Oracle
+  become: true
+  ansible.builtin.shell:
+    cmd: systemctl restart NetworkManager
+  when: "ansible_facts['os_family'] == 'RedHat'"
+
+# Вероятно, стоит сделать добавление строки вместо темплейта

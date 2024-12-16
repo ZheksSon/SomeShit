@@ -1,0 +1,23 @@
+---
+- name: Add necessary
+  become: true
+  ansible.builtin.apt:
+    update_cache: true
+    name:
+     - build-essential
+     - git
+     - make
+    state: present
+    when: ansible_os_family == "Debian"
+
+- name: Get 3Proxy git
+  become: true
+  ansible.builtin.git:
+    repo: "https://github.com/z3APA3A/3proxy.git"
+    dest: /tmp/triproxy
+    force: true
+
+- name: Compile
+  become: true
+  ansible.builtin.make:
+    

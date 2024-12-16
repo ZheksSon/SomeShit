@@ -1,0 +1,7 @@
+---
+# handlers file for DZ
+- name: restart Nginx
+  become: true
+  service:
+    name: nginx
+    state: restarted

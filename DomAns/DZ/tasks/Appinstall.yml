@@ -1,0 +1,27 @@
+---
+- name: Установка Nginx на Ubuntu 22.04
+  become: true
+  ansible.builtin.apt:
+    update_cache: true
+    name: nginx
+    state: present
+  when: "ansible_facts['os_family'] == 'Debian'"
+
+- name: EPEL
+  become: true
+  ansible.builtin.yum:
+    update_cache: true
+    name: epel-release
+    state: present
+  when: "ansible_facts['os_family'] == 'RedHat'"
+
+- name: Установка Nginx на Oracle 8
+  become: true
+  ansible.builtin.yum:
+    update_cache: true
+    name: nginx
+    state: present
+  when: "ansible_facts['os_family'] == 'RedHat'"
+
+# Нужен ли запуск на данном этапе?
+# Нужен ли доп метод для установки nginx через EPEL?
